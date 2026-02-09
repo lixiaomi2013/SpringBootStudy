@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,20 +26,25 @@ public class BaseEntity implements Serializable
     private String searchValue;
 
     /** 创建者 */
+    @Field(type = FieldType.Keyword)
     private String createBy;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+//    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private Date createTime;
 
     /** 更新者 */
+    @Field(type = FieldType.Keyword)
     private String updateBy;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+//    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private Date updateTime;
 
     /** 备注 */
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String remark;
 
     /** 请求参数 */
