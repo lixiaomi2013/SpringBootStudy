@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mgmt.mapper.ProductInfoViewMapper">
+    
+    <resultMap type="ProductInfoView" id="ProductInfoViewResult">
+        <result property="productId"    column="product_id"    />
+        <result property="productCode"    column="product_code"    />
+        <result property="productName"    column="product_name"    />
+        <result property="spec"    column="spec"    />
+        <result property="brand"    column="brand"    />
+        <result property="storageCondition"    column="storage_condition"    />
+        <result property="unit"    column="unit"    />
+        <result property="totailQuantity"    column="totail_quantity"    />
+        <result property="usedQuantity"    column="used_quantity"    />
+        <result property="availableQuantity"    column="available_quantity"    />
+        <result property="projectTimes"    column="project_times"    />
+        <result property="batchNumber"    column="batch_number"    />
+        <result property="productionDate"    column="production_date"    />
+        <result property="expiryDate"    column="expiry_date"    />
+        <result property="approvalNumber"    column="approval_number"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectProductInfoViewVo">
+        select product_id, product_code, product_name, spec, brand, storage_condition, unit, totail_quantity, used_quantity, available_quantity, project_times, batch_number, production_date, expiry_date, approval_number, file_name, status, del_flag, create_by, create_time, update_by, update_time, remark from v_mgmt_product_info_view
+    </sql>
+
+    <select id="selectProductInfoViewList" parameterType="ProductInfoView" resultMap="ProductInfoViewResult">
+        <include refid="selectProductInfoViewVo"/>
+        <where>  
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="productCode != null  and productCode != ''"> and product_code = #{productCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="spec != null  and spec != ''"> and spec like concat('%', #{spec}, '%')</if>
+            <if test="brand != null  and brand != ''"> and brand like concat('%', #{brand}, '%')</if>
+            <if test="storageCondition != null  and storageCondition != ''"> and storage_condition like concat('%', #{storageCondition}, '%')</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="totailQuantity != null "> and totail_quantity = #{totailQuantity}</if>
+            <if test="usedQuantity != null "> and used_quantity = #{usedQuantity}</if>
+            <if test="availableQuantity != null "> and available_quantity = #{availableQuantity}</if>
+            <if test="projectTimes != null "> and project_times = #{projectTimes}</if>
+            <if test="batchNumber != null  and batchNumber != ''"> and batch_number = #{batchNumber}</if>
+            <if test="productionDate != null  and productionDate != ''"> and production_date = #{productionDate}</if>
+            <if test="expiryDate != null  and expiryDate != ''"> and expiry_date = #{expiryDate}</if>
+            <if test="approvalNumber != null  and approvalNumber != ''"> and approval_number = #{approvalNumber}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectProductInfoViewByProductId" parameterType="String" resultMap="ProductInfoViewResult">
+        <include refid="selectProductInfoViewVo"/>
+        where product_id = #{productId}
+    </select>
+
+    <insert id="insertProductInfoView" parameterType="ProductInfoView">
+        insert into v_mgmt_product_info_view
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="productCode != null">product_code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="spec != null">spec,</if>
+            <if test="brand != null">brand,</if>
+            <if test="storageCondition != null">storage_condition,</if>
+            <if test="unit != null">unit,</if>
+            <if test="totailQuantity != null">totail_quantity,</if>
+            <if test="usedQuantity != null">used_quantity,</if>
+            <if test="availableQuantity != null">available_quantity,</if>
+            <if test="projectTimes != null">project_times,</if>
+            <if test="batchNumber != null">batch_number,</if>
+            <if test="productionDate != null">production_date,</if>
+            <if test="expiryDate != null">expiry_date,</if>
+            <if test="approvalNumber != null">approval_number,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="productCode != null">#{productCode},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="spec != null">#{spec},</if>
+            <if test="brand != null">#{brand},</if>
+            <if test="storageCondition != null">#{storageCondition},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="totailQuantity != null">#{totailQuantity},</if>
+            <if test="usedQuantity != null">#{usedQuantity},</if>
+            <if test="availableQuantity != null">#{availableQuantity},</if>
+            <if test="projectTimes != null">#{projectTimes},</if>
+            <if test="batchNumber != null">#{batchNumber},</if>
+            <if test="productionDate != null">#{productionDate},</if>
+            <if test="expiryDate != null">#{expiryDate},</if>
+            <if test="approvalNumber != null">#{approvalNumber},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProductInfoView" parameterType="ProductInfoView">
+        update v_mgmt_product_info_view
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="spec != null">spec = #{spec},</if>
+            <if test="brand != null">brand = #{brand},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="totailQuantity != null">totail_quantity = #{totailQuantity},</if>
+            <if test="usedQuantity != null">used_quantity = #{usedQuantity},</if>
+            <if test="availableQuantity != null">available_quantity = #{availableQuantity},</if>
+            <if test="projectTimes != null">project_times = #{projectTimes},</if>
+            <if test="batchNumber != null">batch_number = #{batchNumber},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="approvalNumber != null">approval_number = #{approvalNumber},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+    <delete id="deleteProductInfoViewByProductId" parameterType="String">
+        delete from v_mgmt_product_info_view where product_id = #{productId}
+    </delete>
+
+    <delete id="deleteProductInfoViewByProductIds" parameterType="String">
+        delete from v_mgmt_product_info_view where product_id in 
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+
+</mapper>

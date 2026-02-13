@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('采购订单列表')" />
+</head>
+<body class="gray-bg">
+    <input type="hidden" id="purchaseId">
+    <input type="hidden" id="purchaseCode">
+    <input type="hidden" id="purchaseName">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>采购单编号：</label>
+                                <input type="text" name="purchaseCode"/>
+                            </li>
+                            <li>
+                                <label>采购单名称：</label>
+                                <input type="text" name="purchaseName"/>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mgmt:purchaseorders:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mgmt:purchaseorders:remove')}]];
+        var statusDatas = [[${@dict.getType('sys_common_status')}]];
+        var delFlagDatas = [[${@dict.getType('sys_del_flag')}]];
+        var prefix = ctx + "mgmt/purchaseorders";
+
+        $(function() {
+            $.extend($.table, {
+                selectedRows: function() {
+                    var selectedRows = $("#" + table.options.id).bootstrapTable('getSelections');
+                    return selectedRows || [];
+                }
+            });
+            var options = {
+                url: prefix + "/list",
+                modalName: "采购订单",
+                showSearch: false,
+                showRefresh: false,
+                showToggle: false,
+                showColumns: false,
+                columns: [{
+                    radio: true
+                },
+                {
+                    field: 'purchaseId',
+                    title: '采购单ID',
+                    visible: false
+                },
+                {
+                    field: 'purchaseCode',
+                    title: '采购单编号'
+                },
+                {
+                    field: 'purchaseName',
+                    title: '采购单名称'
+                },
+                {
+                    field: 'batchNo',
+                    title: '批次号'
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        function submitHandler(index, layero) {
+            var row = $.table.selectedRows()[0];
+
+            if ($.common.isEmpty(row)) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.close();
+            activeWindow().$('#testItemId').val(row['id']);
+            activeWindow().$('#testItemName').val(row['itemName']);
+        }
+        $("#bootstrap-table").on("check.bs.table check-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rowsAfter, rowsBefore) {
+            var rows = $.common.equals("uncheck-all", e.type) ? rowsBefore : rowsAfter;
+            let purchaseId = rows['purchaseId'];
+            let purchaseCode = rows['purchaseCode'];
+            let purchaseName = rows['purchaseName'];
+            debugger;
+            $('#purchaseId').val(purchaseId);
+            $('#purchaseCode').val(purchaseCode);
+            $("#purchaseName").val(purchaseName);
+            console.info("purchaseId:" + purchaseId + ",purchaseCode:" + purchaseCode + ",purchaseName:" + purchaseName);
+        });
+    </script>
+</body>
+</html>

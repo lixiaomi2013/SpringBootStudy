@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 简化版本，使用data属性传递参数 -->
+<div th:fragment="productSelectSimple(name, required, disabled, label)">
+    <!-- 组件容器 -->
+    <div class="form-group product-select-component" 
+         th:id="${'productSelectGroup_' + name}">
+        <label class="col-sm-3 control-label" th:text="${label != null ? label : '产品选择：'}">
+            产品选择：
+        </label>
+        <div class="col-sm-8">
+            <div class="input-group">
+                <!-- 显示产品名称的输入框 -->
+                <input type="text" class="form-control product-name-input" 
+                       th:id="${name + 'Name'}" 
+                       th:name="${name + 'Name'}"
+                       readonly
+                       th:disabled="${disabled}"
+                       placeholder="请选择产品"
+                       th:required="${required}">
+                
+                <!-- 隐藏的产品ID字段 -->
+                <input type="hidden" class="product-id-input"
+                       th:id="${name}" 
+                       th:name="${name}">
+                
+                <!-- 操作按钮 -->
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-select-product" 
+                            th:attr="data-field-name=${name}"
+                            th:disabled="${disabled}">
+                        <i class="fa fa-search"></i> 选择
+                    </button>
+                    <button type="button" class="btn btn-danger btn-clear-product"
+                            th:attr="data-field-name=${name}"
+                            th:disabled="${disabled}">
+                        <i class="fa fa-close"></i> 清空
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 完整版本，支持回显 -->
+<div th:fragment="productSelect(name, productId, productName, required, disabled, label)">
+    <!-- 组件容器 -->
+    <div class="form-group product-select-component" 
+         th:id="${'productSelectGroup_' + name}">
+        <label class="col-sm-3 control-label" th:text="${label != null ? label : '产品选择：'}">
+            产品选择：
+        </label>
+        <div class="col-sm-8">
+            <div class="input-group">
+                <!-- 显示产品名称的输入框 -->
+                <input type="text" class="form-control product-name-input" 
+                       th:id="${name + 'Name'}" 
+                       th:name="${name + 'Name'}"
+                       th:value="${productName}"
+                       readonly
+                       th:disabled="${disabled}"
+                       placeholder="请选择产品"
+                       th:required="${required}">
+                
+                <!-- 隐藏的产品ID字段 -->
+                <input type="hidden" class="product-id-input"
+                       th:id="${name}" 
+                       th:name="${name}"
+                       th:value="${productId}">
+                
+                <!-- 操作按钮 -->
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-select-product" 
+                            th:attr="data-field-name=${name}"
+                            th:disabled="${disabled}">
+                        <i class="fa fa-search"></i> 选择
+                    </button>
+                    <button type="button" class="btn btn-danger btn-clear-product"
+                            th:attr="data-field-name=${name}"
+                            th:disabled="${disabled}">
+                        <i class="fa fa-close"></i> 清空
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

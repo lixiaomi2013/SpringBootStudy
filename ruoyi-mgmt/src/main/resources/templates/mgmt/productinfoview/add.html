@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增产品库存信息')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-productinfoview-add">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">产品ID：</label>
+                    <div class="col-sm-8">
+                        <input name="productId" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">产品编号：</label>
+                    <div class="col-sm-8">
+                        <input name="productCode" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">产品名称：</label>
+                    <div class="col-sm-8">
+                        <input name="productName" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">规格：</label>
+                    <div class="col-sm-8">
+                        <input name="spec" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">品牌：</label>
+                    <div class="col-sm-8">
+                        <input name="brand" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">存储条件：</label>
+                    <div class="col-sm-8">
+                        <input name="storageCondition" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">单位：</label>
+                    <div class="col-sm-8">
+                        <input name="unit" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">总计数量：</label>
+                    <div class="col-sm-8">
+                        <input name="totailQuantity" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">已用数量：</label>
+                    <div class="col-sm-8">
+                        <input name="usedQuantity" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">可用数量：</label>
+                    <div class="col-sm-8">
+                        <input name="availableQuantity" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">项次：</label>
+                    <div class="col-sm-8">
+                        <input name="projectTimes" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">批次号：</label>
+                    <div class="col-sm-8">
+                        <input name="batchNumber" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">生产日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="productionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">有效日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="expiryDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">批准文号：</label>
+                    <div class="col-sm-8">
+                        <input name="approvalNumber" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">导入文件名称：</label>
+                    <div class="col-sm-8">
+                        <input name="fileName" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">状态：</label>
+                    <div class="col-sm-8">
+                        <div class="radio-box" th:each="dict : ${@dict.getType('sys_common_status')}">
+                            <input type="radio" th:id="${'status_' + dict.dictCode}" name="status" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                            <label th:for="${'status_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">删除标志：</label>
+                    <div class="col-sm-8">
+                        <select name="delFlag" class="form-control" th:with="type=${@dict.getType('sys_del_flag')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">备注：</label>
+                    <div class="col-sm-8">
+                        <textarea name="remark" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "mgmt/productinfoview"
+        $("#form-productinfoview-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-productinfoview-add').serialize());
+            }
+        }
+
+        $("input[name='productionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='expiryDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

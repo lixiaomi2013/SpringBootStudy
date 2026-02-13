@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="productModal">
+    <!-- 产品选择弹窗 -->
+    <div class="modal fade" id="productSelectModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">选择产品</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- 搜索表单 -->
+                    <form id="productSearchForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">产品名称：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="productName" placeholder="请输入产品名称">
+                                    </div>
+                                    <label class="col-sm-2 control-label">产品编码：</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="productCode" placeholder="请输入产品编码">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12" style="text-align:center;">
+                                <button type="button" class="btn btn-primary" onclick="searchProduct()">
+                                    <i class="fa fa-search"></i> 搜索
+                                </button>
+                                <button type="button" class="btn btn-warning" onclick="resetProductSearch()">
+                                    <i class="fa fa-refresh"></i> 重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <!-- 产品列表表格 -->
+                    <table id="productSelectTable"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmProductSelect()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

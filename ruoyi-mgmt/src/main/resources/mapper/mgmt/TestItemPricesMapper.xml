@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mgmt.mapper.TestItemPricesMapper">
+    
+    <resultMap type="TestItemPrices" id="TestItemPricesResult">
+        <result property="id"    column="id"    />
+        <result property="testItemId"    column="test_item_id"    />
+        <result property="price"    column="price"    />
+        <result property="currency"    column="currency"    />
+        <result property="priceType"    column="price_type"    />
+        <result property="clientType"    column="client_type"    />
+        <result property="effectiveDate"    column="effective_date"    />
+        <result property="expiryDate"    column="expiry_date"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTestItemPricesVo">
+        select id, test_item_id, price, currency, price_type, client_type, effective_date, expiry_date, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_item_prices
+    </sql>
+
+    <select id="selectTestItemPricesList" parameterType="TestItemPrices" resultMap="TestItemPricesResult">
+        <include refid="selectTestItemPricesVo"/>
+        <where>  
+            <if test="testItemId != null  and testItemId != ''"> and test_item_id = #{testItemId}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="currency != null  and currency != ''"> and currency = #{currency}</if>
+            <if test="priceType != null  and priceType != ''"> and price_type = #{priceType}</if>
+            <if test="clientType != null  and clientType != ''"> and client_type = #{clientType}</if>
+            <if test="effectiveDate != null  and effectiveDate != ''"> and effective_date = #{effectiveDate}</if>
+            <if test="expiryDate != null  and expiryDate != ''"> and expiry_date = #{expiryDate}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTestItemPricesById" parameterType="String" resultMap="TestItemPricesResult">
+        <include refid="selectTestItemPricesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTestItemPrices" parameterType="TestItemPrices">
+        insert into t_mgmt_test_item_prices
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="testItemId != null and testItemId != ''">test_item_id,</if>
+            <if test="price != null">price,</if>
+            <if test="currency != null">currency,</if>
+            <if test="priceType != null and priceType != ''">price_type,</if>
+            <if test="clientType != null">client_type,</if>
+            <if test="effectiveDate != null">effective_date,</if>
+            <if test="expiryDate != null">expiry_date,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="testItemId != null and testItemId != ''">#{testItemId},</if>
+            <if test="price != null">#{price},</if>
+            <if test="currency != null">#{currency},</if>
+            <if test="priceType != null and priceType != ''">#{priceType},</if>
+            <if test="clientType != null">#{clientType},</if>
+            <if test="effectiveDate != null">#{effectiveDate},</if>
+            <if test="expiryDate != null">#{expiryDate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestItemPrices" parameterType="TestItemPrices">
+        update t_mgmt_test_item_prices
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="testItemId != null and testItemId != ''">test_item_id = #{testItemId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="currency != null">currency = #{currency},</if>
+            <if test="priceType != null and priceType != ''">price_type = #{priceType},</if>
+            <if test="clientType != null">client_type = #{clientType},</if>
+            <if test="effectiveDate != null">effective_date = #{effectiveDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestItemPricesById" parameterType="String">
+        delete from t_mgmt_test_item_prices where id = #{id}
+    </delete>
+
+    <delete id="deleteTestItemPricesByIds" parameterType="String">
+        delete from t_mgmt_test_item_prices where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

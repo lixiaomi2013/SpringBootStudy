@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增检验项目与设备关联')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-testiteminstruments-add">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">项目ID：</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="testItemId" id="testItemId" onclick="selectTestItem('testItemId','testItemName')" class="form-control" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">项目名称：</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="testItemName" id="testItemName" onclick="selectTestItem('testItemId','testItemName')" class="form-control" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">设备ID：</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="instrumentId" name="instrumentId" onclick="selectInstrument('instrumentId','instrumentName')" class="form-control" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">设备名称：</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="instrumentName" name="instrumentName" onclick="selectInstrument('instrumentId','instrumentName')" class="form-control" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">样本类型：</label>
+                    <div class="col-sm-8">
+                        <select name="sampleType" class="form-control" th:with="type=${@dict.getType('mgmt_sample_type')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">价格：</label>
+                    <div class="col-sm-8">
+                        <input name="price" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否为主要检测设备：</label>
+                    <div class="col-sm-8">
+                        <select name="isPrimary" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">是否为默认设备：</label>
+                    <div class="col-sm-8">
+                        <select name="isDefault" class="form-control" th:with="type=${@dict.getType('sys_yes_no')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">排序：</label>
+                    <div class="col-sm-8">
+                        <input name="sortOrder" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">状态：</label>
+                    <div class="col-sm-8">
+                        <select name="status" class="form-control" th:with="type=${@dict.getType('sys_common_status')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">删除标志：</label>
+                    <div class="col-sm-8">
+                        <select name="delFlag" class="form-control" th:with="type=${@dict.getType('sys_del_flag')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">备注：</label>
+                    <div class="col-sm-8">
+                        <textarea name="remark" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "mgmt/testiteminstruments"
+        $("#form-testiteminstruments-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-testiteminstruments-add').serialize());
+            }
+        }
+    </script>
+    <script type="text/javascript">
+		var prefix_testitem = ctx + "mgmt/testitems";
+		function selectTestItem(testItemId, testItemName) {
+			var options = {
+				title : '选择检验项目',
+				url : prefix_testitem + "/select",
+				callBack : doSubmit1
+			};
+			$.modal.openOptions(options);
+		}
+		
+		function doSubmit1(index, layero){
+			var body = $.modal.getChildFrame(index);
+            let testItemId = body.find('#testItemId').val();
+            let testItemCode = body.find('#testItemCode').val();
+            let testItemName = body.find('#testItemName').val();
+   			$('#testItemId').val(testItemId);
+			$('#testItemCode').val(testItemCode);
+            $("#testItemName").val(testItemName);
+   			$.modal.close(index);
+		}
+		
+		var instrument_prefix = ctx + "mgmt/instruments";
+		function selectInstrument(instrumentId, instrumentName) {
+			var options = {
+				title : '选择设备仪器',
+				url : instrument_prefix + "/select",
+				callBack : doSubmit2
+			};
+			$.modal.openOptions(options);
+		}
+		
+		function doSubmit2(index, layero){
+			var body = $.modal.getChildFrame(index);
+            let instrumentId = body.find('#instrumentId').val();
+            let instrumentName = body.find('#instrumentName').val();
+			$('#instrumentId').val(instrumentId);
+            $("#instrumentName").val(instrumentName);
+   			$.modal.close(index);
+		}
+	</script>
+</body>
+</html>

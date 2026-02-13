@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mgmt.mapper.TestItemsMapper">
+    
+    <resultMap type="TestItems" id="TestItemsResult">
+        <result property="id"    column="id"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="reportName"    column="report_name"    />
+        <result property="testTypeId"    column="test_type_id"    />
+        <result property="testCategory"    column="test_category"    />
+        <result property="sampleType"    column="sample_type"    />
+        <result property="sampleVolume"    column="sample_volume"    />
+        <result property="sampleContainer"    column="sample_container"    />
+        <result property="clinicalSignificance"    column="clinical_significance"    />
+        <result property="referenceRange"    column="reference_range"    />
+        <result property="unit"    column="unit"    />
+        <result property="turnaroundTime"    column="turnaround_time"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTestItemsVo">
+        select id, item_code, item_name, report_name, test_type_id, test_category, sample_type, sample_volume, sample_container, clinical_significance, reference_range, unit, turnaround_time, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_items
+    </sql>
+
+    <select id="selectTestItemsList" parameterType="TestItems" resultMap="TestItemsResult">
+        <include refid="selectTestItemsVo"/>
+        <where>  
+            <if test="itemCode != null  and itemCode != ''"> and item_code = #{itemCode}</if>
+            <if test="itemName != null  and itemName != ''"> and item_name like concat('%', #{itemName}, '%')</if>
+            <if test="reportName != null  and reportName != ''"> and report_name like concat('%', #{reportName}, '%')</if>
+            <if test="testTypeId != null  and testTypeId != ''"> and test_type_id = #{testTypeId}</if>
+            <if test="testCategory != null  and testCategory != ''"> and test_category = #{testCategory}</if>
+            <if test="sampleType != null  and sampleType != ''"> and sample_type = #{sampleType}</if>
+            <if test="sampleVolume != null "> and sample_volume = #{sampleVolume}</if>
+            <if test="sampleContainer != null  and sampleContainer != ''"> and sample_container = #{sampleContainer}</if>
+            <if test="clinicalSignificance != null  and clinicalSignificance != ''"> and clinical_significance = #{clinicalSignificance}</if>
+            <if test="referenceRange != null  and referenceRange != ''"> and reference_range = #{referenceRange}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="turnaroundTime != null "> and turnaround_time = #{turnaroundTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTestItemsById" parameterType="String" resultMap="TestItemsResult">
+        <include refid="selectTestItemsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTestItems" parameterType="TestItems">
+        insert into t_mgmt_test_items
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="itemCode != null and itemCode != ''">item_code,</if>
+            <if test="itemName != null and itemName != ''">item_name,</if>
+            <if test="reportName != null">report_name,</if>
+            <if test="testTypeId != null">test_type_id,</if>
+            <if test="testCategory != null">test_category,</if>
+            <if test="sampleType != null">sample_type,</if>
+            <if test="sampleVolume != null">sample_volume,</if>
+            <if test="sampleContainer != null">sample_container,</if>
+            <if test="clinicalSignificance != null">clinical_significance,</if>
+            <if test="referenceRange != null">reference_range,</if>
+            <if test="unit != null">unit,</if>
+            <if test="turnaroundTime != null">turnaround_time,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="itemCode != null and itemCode != ''">#{itemCode},</if>
+            <if test="itemName != null and itemName != ''">#{itemName},</if>
+            <if test="reportName != null">#{reportName},</if>
+            <if test="testTypeId != null">#{testTypeId},</if>
+            <if test="testCategory != null">#{testCategory},</if>
+            <if test="sampleType != null">#{sampleType},</if>
+            <if test="sampleVolume != null">#{sampleVolume},</if>
+            <if test="sampleContainer != null">#{sampleContainer},</if>
+            <if test="clinicalSignificance != null">#{clinicalSignificance},</if>
+            <if test="referenceRange != null">#{referenceRange},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="turnaroundTime != null">#{turnaroundTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestItems" parameterType="TestItems">
+        update t_mgmt_test_items
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
+            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="reportName != null">report_name = #{reportName},</if>
+            <if test="testTypeId != null">test_type_id = #{testTypeId},</if>
+            <if test="testCategory != null">test_category = #{testCategory},</if>
+            <if test="sampleType != null">sample_type = #{sampleType},</if>
+            <if test="sampleVolume != null">sample_volume = #{sampleVolume},</if>
+            <if test="sampleContainer != null">sample_container = #{sampleContainer},</if>
+            <if test="clinicalSignificance != null">clinical_significance = #{clinicalSignificance},</if>
+            <if test="referenceRange != null">reference_range = #{referenceRange},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="turnaroundTime != null">turnaround_time = #{turnaroundTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTestItemsById" parameterType="String">
+        delete from t_mgmt_test_items where id = #{id}
+    </delete>
+
+    <delete id="deleteTestItemsByIds" parameterType="String">
+        delete from t_mgmt_test_items where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

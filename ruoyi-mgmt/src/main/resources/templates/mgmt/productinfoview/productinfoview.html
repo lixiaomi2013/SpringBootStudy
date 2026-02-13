@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('产品库存信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>产品ID：</label>
+                                <input type="text" name="productId"/>
+                            </li>
+                            <li>
+                                <label>产品编号：</label>
+                                <input type="text" name="productCode"/>
+                            </li>
+                            <li>
+                                <label>产品名称：</label>
+                                <input type="text" name="productName"/>
+                            </li>
+                            <li>
+                                <label>规格：</label>
+                                <input type="text" name="spec"/>
+                            </li>
+                            <li>
+                                <label>品牌：</label>
+                                <input type="text" name="brand"/>
+                            </li>
+                            <li>
+                                <label>存储条件：</label>
+                                <input type="text" name="storageCondition"/>
+                            </li>
+                            <li>
+                                <label>单位：</label>
+                                <input type="text" name="unit"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('sys_common_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="btn-group-sm" id="toolbar" role="group">
+<!--                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="mgmt:productinfoview:add">-->
+<!--                    <i class="fa fa-plus"></i> 添加-->
+<!--                </a>-->
+<!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="mgmt:productinfoview:edit">-->
+<!--                    <i class="fa fa-edit"></i> 修改-->
+<!--                </a>-->
+<!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="mgmt:productinfoview:remove">-->
+<!--                    <i class="fa fa-remove"></i> 删除-->
+<!--                </a>-->
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="mgmt:productinfoview:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mgmt:productinfoview:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mgmt:productinfoview:remove')}]];
+        var statusDatas = [[${@dict.getType('sys_common_status')}]];
+        var delFlagDatas = [[${@dict.getType('sys_del_flag')}]];
+        var prefix = ctx + "mgmt/productinfoview";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "产品库存信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'productId',
+                    title: '产品ID',
+                    visible: false
+                },
+                {
+                    field: 'productCode',
+                    title: '产品编号'
+                },
+                {
+                    field: 'productName',
+                    title: '产品名称'
+                },
+                {
+                    field: 'spec',
+                    title: '规格'
+                },
+                {
+                    field: 'brand',
+                    title: '品牌'
+                },
+                {
+                    field: 'storageCondition',
+                    title: '存储条件'
+                },
+                {
+                    field: 'unit',
+                    title: '单位'
+                },
+                {
+                    field: 'totailQuantity',
+                    title: '总计数量'
+                },
+                {
+                    field: 'usedQuantity',
+                    title: '已用数量'
+                },
+                {
+                    field: 'availableQuantity',
+                    title: '可用数量'
+                },
+                {
+                    field: 'projectTimes',
+                    title: '项次'
+                },
+                {
+                    field: 'batchNumber',
+                    title: '批次号',
+                    visible: false
+                },
+                {
+                    field: 'productionDate',
+                    title: '生产日期',
+                    visible: false
+                },
+                {
+                    field: 'expiryDate',
+                    title: '有效日期',
+                    visible: false
+                },
+                {
+                    field: 'approvalNumber',
+                    title: '批准文号',
+                    visible: false
+                },
+                {
+                    field: 'fileName',
+                    title: '导入文件名称',
+                    visible: false
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    visible: false
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

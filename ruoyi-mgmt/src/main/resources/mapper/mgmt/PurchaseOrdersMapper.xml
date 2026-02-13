@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mgmt.mapper.PurchaseOrdersMapper">
+    
+    <resultMap type="PurchaseOrders" id="PurchaseOrdersResult">
+        <result property="purchaseId"    column="purchase_id"    />
+        <result property="purchaseCode"    column="purchase_code"    />
+        <result property="purchaseName"    column="purchase_name"    />
+        <result property="batchNo"    column="batch_no"    />
+        <result property="purchaseQuantity"    column="purchase_quantity"    />
+        <result property="receivedQuantity"    column="received_quantity"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="purchaseDate"    column="purchase_date"    />
+        <result property="expectedDate"    column="expected_date"    />
+        <result property="actualDate"    column="actual_date"    />
+        <result property="taxRate"    column="tax_rate"    />
+        <result property="amount"    column="amount"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectPurchaseOrdersVo">
+        select purchase_id, purchase_code, purchase_name, batch_no, purchase_quantity, received_quantity, unit_price, purchase_date, expected_date, actual_date, tax_rate, amount, file_name, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_purchase_orders
+    </sql>
+
+    <select id="selectPurchaseOrdersList" parameterType="PurchaseOrders" resultMap="PurchaseOrdersResult">
+        <include refid="selectPurchaseOrdersVo"/>
+        <where>  
+            <if test="purchaseCode != null  and purchaseCode != ''"> and purchase_code = #{purchaseCode}</if>
+            <if test="purchaseName != null  and purchaseName != ''"> and purchase_name like concat('%', #{purchaseName}, '%')</if>
+            <if test="batchNo != null  and batchNo != ''"> and batch_no = #{batchNo}</if>
+            <if test="purchaseQuantity != null "> and purchase_quantity = #{purchaseQuantity}</if>
+            <if test="receivedQuantity != null "> and received_quantity = #{receivedQuantity}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="purchaseDate != null  and purchaseDate != ''"> and purchase_date = #{purchaseDate}</if>
+            <if test="expectedDate != null  and expectedDate != ''"> and expected_date = #{expectedDate}</if>
+            <if test="actualDate != null  and actualDate != ''"> and actual_date = #{actualDate}</if>
+            <if test="taxRate != null "> and tax_rate = #{taxRate}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectPurchaseOrdersByPurchaseId" parameterType="String" resultMap="PurchaseOrdersResult">
+        <include refid="selectPurchaseOrdersVo"/>
+        where purchase_id = #{purchaseId}
+    </select>
+
+    <insert id="insertPurchaseOrders" parameterType="PurchaseOrders">
+        insert into t_mgmt_purchase_orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaseId != null">purchase_id,</if>
+            <if test="purchaseCode != null and purchaseCode != ''">purchase_code,</if>
+            <if test="purchaseName != null and purchaseName != ''">purchase_name,</if>
+            <if test="batchNo != null">batch_no,</if>
+            <if test="purchaseQuantity != null">purchase_quantity,</if>
+            <if test="receivedQuantity != null">received_quantity,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="purchaseDate != null">purchase_date,</if>
+            <if test="expectedDate != null">expected_date,</if>
+            <if test="actualDate != null">actual_date,</if>
+            <if test="taxRate != null">tax_rate,</if>
+            <if test="amount != null">amount,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaseId != null">#{purchaseId},</if>
+            <if test="purchaseCode != null and purchaseCode != ''">#{purchaseCode},</if>
+            <if test="purchaseName != null and purchaseName != ''">#{purchaseName},</if>
+            <if test="batchNo != null">#{batchNo},</if>
+            <if test="purchaseQuantity != null">#{purchaseQuantity},</if>
+            <if test="receivedQuantity != null">#{receivedQuantity},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="purchaseDate != null">#{purchaseDate},</if>
+            <if test="expectedDate != null">#{expectedDate},</if>
+            <if test="actualDate != null">#{actualDate},</if>
+            <if test="taxRate != null">#{taxRate},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePurchaseOrders" parameterType="PurchaseOrders">
+        update t_mgmt_purchase_orders
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaseCode != null and purchaseCode != ''">purchase_code = #{purchaseCode},</if>
+            <if test="purchaseName != null and purchaseName != ''">purchase_name = #{purchaseName},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
+            <if test="purchaseQuantity != null">purchase_quantity = #{purchaseQuantity},</if>
+            <if test="receivedQuantity != null">received_quantity = #{receivedQuantity},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="expectedDate != null">expected_date = #{expectedDate},</if>
+            <if test="actualDate != null">actual_date = #{actualDate},</if>
+            <if test="taxRate != null">tax_rate = #{taxRate},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where purchase_id = #{purchaseId}
+    </update>
+
+    <delete id="deletePurchaseOrdersByPurchaseId" parameterType="String">
+        delete from t_mgmt_purchase_orders where purchase_id = #{purchaseId}
+    </delete>
+
+    <delete id="deletePurchaseOrdersByPurchaseIds" parameterType="String">
+        delete from t_mgmt_purchase_orders where purchase_id in 
+        <foreach item="purchaseId" collection="array" open="(" separator="," close=")">
+            #{purchaseId}
+        </foreach>
+    </delete>
+
+</mapper>

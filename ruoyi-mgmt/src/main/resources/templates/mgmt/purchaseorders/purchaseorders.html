@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('采购订单列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>采购单编号：</label>
+                                <input type="text" name="purchaseCode"/>
+                            </li>
+                            <li>
+                                <label>采购单名称：</label>
+                                <input type="text" name="purchaseName"/>
+                            </li>
+                            <li>
+                                <label>批次号：</label>
+                                <input type="text" name="batchNo"/>
+                            </li>
+                            <li>
+                                <label>采购数量：</label>
+                                <input type="text" name="purchaseQuantity"/>
+                            </li>
+                            <li>
+                                <label>已入库数量：</label>
+                                <input type="text" name="receivedQuantity"/>
+                            </li>
+                            <li>
+                                <label>采购单价：</label>
+                                <input type="text" name="unitPrice"/>
+                            </li>
+                            <li>
+                                <label>采购日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择采购日期" name="purchaseDate"/>
+                            </li>
+                            <li>
+                                <label>预计到货日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择预计到货日期" name="expectedDate"/>
+                            </li>
+                            <li>
+                                <label>实际到货日期：</label>
+                                <input type="text" class="time-input" placeholder="请选择实际到货日期" name="actualDate"/>
+                            </li>
+                            <li>
+                                <label>税率：</label>
+                                <input type="text" name="taxRate"/>
+                            </li>
+                            <li>
+                                <label>金额：</label>
+                                <input type="text" name="amount"/>
+                            </li>
+                            <li>
+                                <label>导入文件名称：</label>
+                                <input type="text" name="fileName"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('sys_common_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="mgmt:purchaseorders:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="mgmt:purchaseorders:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="mgmt:purchaseorders:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="mgmt:purchaseorders:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('mgmt:purchaseorders:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('mgmt:purchaseorders:remove')}]];
+        var statusDatas = [[${@dict.getType('sys_common_status')}]];
+        var delFlagDatas = [[${@dict.getType('sys_del_flag')}]];
+        var prefix = ctx + "mgmt/purchaseorders";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "采购订单",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'purchaseId',
+                    title: '采购单ID',
+                    visible: false
+                },
+                {
+                    field: 'purchaseCode',
+                    title: '采购单编号'
+                },
+                {
+                    field: 'purchaseName',
+                    title: '采购单名称'
+                },
+                {
+                    field: 'batchNo',
+                    title: '批次号'
+                },
+                {
+                    field: 'purchaseQuantity',
+                    title: '采购数量'
+                },
+                {
+                    field: 'receivedQuantity',
+                    title: '已入库数量'
+                },
+                {
+                    field: 'unitPrice',
+                    title: '采购单价'
+                },
+                {
+                    field: 'purchaseDate',
+                    title: '采购日期'
+                },
+                {
+                    field: 'expectedDate',
+                    title: '预计到货日期'
+                },
+                {
+                    field: 'actualDate',
+                    title: '实际到货日期'
+                },
+                {
+                    field: 'taxRate',
+                    title: '税率'
+                },
+                {
+                    field: 'amount',
+                    title: '金额'
+                },
+                {
+                    field: 'fileName',
+                    title: '导入文件名称'
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.purchaseId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.purchaseId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
