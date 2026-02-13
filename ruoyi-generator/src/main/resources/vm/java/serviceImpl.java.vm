@@ -8,6 +8,7 @@ import com.ruoyi.common.core.domain.Ztree;
 #foreach ($column in $columns)
 #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.uuid.IdUtils;
 #break
 #end
 #end
@@ -72,6 +73,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public int insert${ClassName}(${ClassName} ${className})
     {
+#if($pkColumn.javaType == 'String')
+        ${className}.set${pkColumn.capJavaField}(IdUtils.fastSimpleUUID());
+#end
 #foreach ($column in $columns)
 #if($column.javaField == 'createTime')
         ${className}.setCreateTime(DateUtils.getNowDate());
