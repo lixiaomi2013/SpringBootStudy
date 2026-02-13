@@ -94,7 +94,10 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-
+        <!-- ES模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-es</artifactId>
+        </dependency>
     </dependencies>
-
 </project>
