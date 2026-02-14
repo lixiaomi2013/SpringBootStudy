@@ -20,10 +20,10 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 检验项目主Controller
+ * 检验项目信息Controller
  * 
  * @author zhuhoulin
- * @date 2026-01-03
+ * @date 2026-02-14
  */
 @Controller
 @RequestMapping("/mgmt/testitems")
@@ -42,7 +42,7 @@ public class TestItemsController extends BaseController
     }
 
     /**
-     * 查询检验项目主列表
+     * 查询检验项目信息列表
      */
     @RequiresPermissions("mgmt:testitems:list")
     @PostMapping("/list")
@@ -55,21 +55,21 @@ public class TestItemsController extends BaseController
     }
 
     /**
-     * 导出检验项目主列表
+     * 导出检验项目信息列表
      */
     @RequiresPermissions("mgmt:testitems:export")
-    @Log(title = "检验项目主", businessType = BusinessType.EXPORT)
+    @Log(title = "检验项目信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(TestItems testItems)
     {
         List<TestItems> list = testItemsService.selectTestItemsList(testItems);
         ExcelUtil<TestItems> util = new ExcelUtil<TestItems>(TestItems.class);
-        return util.exportExcel(list, "检验项目主数据");
+        return util.exportExcel(list, "检验项目信息数据");
     }
 
     /**
-     * 新增检验项目主
+     * 新增检验项目信息
      */
     @RequiresPermissions("mgmt:testitems:add")
     @GetMapping("/add")
@@ -79,10 +79,10 @@ public class TestItemsController extends BaseController
     }
 
     /**
-     * 新增保存检验项目主
+     * 新增保存检验项目信息
      */
     @RequiresPermissions("mgmt:testitems:add")
-    @Log(title = "检验项目主", businessType = BusinessType.INSERT)
+    @Log(title = "检验项目信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(TestItems testItems)
@@ -91,22 +91,22 @@ public class TestItemsController extends BaseController
     }
 
     /**
-     * 修改检验项目主
+     * 修改检验项目信息
      */
     @RequiresPermissions("mgmt:testitems:edit")
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
+    @GetMapping("/edit/{testItemId}")
+    public String edit(@PathVariable("testItemId") String testItemId, ModelMap mmap)
     {
-        TestItems testItems = testItemsService.selectTestItemsById(id);
+        TestItems testItems = testItemsService.selectTestItemsByTestItemId(testItemId);
         mmap.put("testItems", testItems);
         return prefix + "/edit";
     }
 
     /**
-     * 修改保存检验项目主
+     * 修改保存检验项目信息
      */
     @RequiresPermissions("mgmt:testitems:edit")
-    @Log(title = "检验项目主", businessType = BusinessType.UPDATE)
+    @Log(title = "检验项目信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(TestItems testItems)
@@ -115,15 +115,15 @@ public class TestItemsController extends BaseController
     }
 
     /**
-     * 删除检验项目主
+     * 删除检验项目信息
      */
     @RequiresPermissions("mgmt:testitems:remove")
-    @Log(title = "检验项目主", businessType = BusinessType.DELETE)
+    @Log(title = "检验项目信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(testItemsService.deleteTestItemsByIds(ids));
+        return toAjax(testItemsService.deleteTestItemsByTestItemIds(ids));
     }
     
     @RequiresPermissions("mgmt:testitems:view")

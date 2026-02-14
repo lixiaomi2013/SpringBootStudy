@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 检验项目与设备关联对象 t_mgmt_test_item_instruments
  * 
  * @author zhuhoulin
- * @date 2026-01-19
+ * @date 2026-02-14
  */
 public class TestItemInstruments extends BaseEntity
 {
@@ -23,6 +23,10 @@ public class TestItemInstruments extends BaseEntity
     @Excel(name = "项目ID")
     private String testItemId;
 
+    /** 项目代码 */
+    @Excel(name = "项目代码")
+    private String testItemCode;
+
     /** 项目名称 */
     @Excel(name = "项目名称")
     private String testItemName;
@@ -30,6 +34,10 @@ public class TestItemInstruments extends BaseEntity
     /** 设备ID */
     @Excel(name = "设备ID")
     private String instrumentId;
+
+    /** 仪器编号 */
+    @Excel(name = "仪器编号")
+    private String instrumentCode;
 
     /** 设备名称 */
     @Excel(name = "设备名称")
@@ -39,8 +47,8 @@ public class TestItemInstruments extends BaseEntity
     @Excel(name = "样本类型")
     private String sampleType;
 
-    /** 价格（元） */
-    @Excel(name = "价格", readConverterExp = "元=")
+    /** 价格 */
+    @Excel(name = "价格")
     private BigDecimal price;
 
     /** 是否为主要检测设备 */
@@ -82,6 +90,16 @@ public class TestItemInstruments extends BaseEntity
         return testItemId;
     }
 
+    public void setTestItemCode(String testItemCode) 
+    {
+        this.testItemCode = testItemCode;
+    }
+
+    public String getTestItemCode() 
+    {
+        return testItemCode;
+    }
+
     public void setTestItemName(String testItemName) 
     {
         this.testItemName = testItemName;
@@ -100,6 +118,16 @@ public class TestItemInstruments extends BaseEntity
     public String getInstrumentId() 
     {
         return instrumentId;
+    }
+
+    public void setInstrumentCode(String instrumentCode) 
+    {
+        this.instrumentCode = instrumentCode;
+    }
+
+    public String getInstrumentCode() 
+    {
+        return instrumentCode;
     }
 
     public void setInstrumentName(String instrumentName) 
@@ -187,8 +215,10 @@ public class TestItemInstruments extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("testItemId", getTestItemId())
+            .append("testItemCode", getTestItemCode())
             .append("testItemName", getTestItemName())
             .append("instrumentId", getInstrumentId())
+            .append("instrumentCode", getInstrumentCode())
             .append("instrumentName", getInstrumentName())
             .append("sampleType", getSampleType())
             .append("price", getPrice())

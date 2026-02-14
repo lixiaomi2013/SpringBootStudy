@@ -15,6 +15,10 @@
                                 <input type="text" name="testItemId"/>
                             </li>
                             <li>
+                                <label>项目代码：</label>
+                                <input type="text" name="testItemCode"/>
+                            </li>
+                            <li>
                                 <label>项目名称：</label>
                                 <input type="text" name="testItemName"/>
                             </li>
@@ -40,6 +44,13 @@
                             <li>
                                 <label>价格：</label>
                                 <input type="text" name="price"/>
+                            </li>
+                            <li>
+                                <label>状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('sys_common_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -74,6 +85,8 @@
         var editFlag = [[${@permission.hasPermi('mgmt:testitemproductinfo:edit')}]];
         var removeFlag = [[${@permission.hasPermi('mgmt:testitemproductinfo:remove')}]];
         var sampleTypeDatas = [[${@dict.getType('mgmt_sample_type')}]];
+        var statusDatas = [[${@dict.getType('sys_common_status')}]];
+        var delFlagDatas = [[${@dict.getType('sys_del_flag')}]];
         var prefix = ctx + "mgmt/testitemproductinfo";
 
         $(function() {
@@ -95,6 +108,10 @@
                 {
                     field: 'testItemId',
                     title: '项目ID'
+                },
+                {
+                    field: 'testItemCode',
+                    title: '项目代码'
                 },
                 {
                     field: 'testItemName',
@@ -125,7 +142,10 @@
                 },
                 {
                     field: 'status',
-                    title: '状态'
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
                 },
                 {
                     field: 'remark',
@@ -147,15 +167,15 @@
     </script>
     <script type="text/javascript">
         var prefix_testitem = ctx + "mgmt/testitems";
-		function selectTestItem(testItemId, testItemName){
-			$.modal.open("选择检验项目", prefix_testitem + "/select");
+        function selectTestItem(testItemId, testItemName){
+            $.modal.open("选择检验项目", prefix_testitem + "/select");
         }
-		
+        
         var instrument_prefix = ctx + "mgmt/instruments";
-		function selectInstrument(instrumentId, instrumentName){
-			$.modal.open("选择仪器", instrument_prefix + "/select");
+        function selectInstrument(instrumentId, instrumentName){
+            $.modal.open("选择仪器", instrument_prefix + "/select");
         }
-	</script>
+    </script>
     
 </body>
 </html>

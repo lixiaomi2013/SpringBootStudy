@@ -15,12 +15,20 @@
                                 <input type="text" id="testItemId" name="testItemId" onclick="selectTestItem('testItemId','testItemName')"/>
                             </li>
                             <li>
+                                <label>项目代码：</label>
+                                <input type="text" name="testItemCode"/>
+                            </li>
+                            <li>
                                 <label>项目名称：</label>
                                 <input type="text" id="testItemName" name="testItemName" onclick="selectTestItem('testItemId','testItemName')"/>
                             </li>
                             <li>
                                 <label>设备ID：</label>
                                 <input type="text" id="instrumentId" name="instrumentId" onclick="selectInstrument('instrumentId','instrumentName')"/>
+                            </li>
+                            <li>
+                                <label>仪器编号：</label>
+                                <input type="text" name="instrumentCode"/>
                             </li>
                             <li>
                                 <label>设备名称：</label>
@@ -122,12 +130,20 @@
                     title: '项目ID'
                 },
                 {
+                    field: 'testItemCode',
+                    title: '项目代码'
+                },
+                {
                     field: 'testItemName',
                     title: '项目名称'
                 },
                 {
                     field: 'instrumentId',
                     title: '设备ID'
+                },
+                {
+                    field: 'instrumentCode',
+                    title: '仪器编号'
                 },
                 {
                     field: 'instrumentName',

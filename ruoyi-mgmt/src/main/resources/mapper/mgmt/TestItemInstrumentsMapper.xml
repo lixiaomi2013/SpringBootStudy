@@ -7,8 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="TestItemInstruments" id="TestItemInstrumentsResult">
         <result property="id"    column="id"    />
         <result property="testItemId"    column="test_item_id"    />
+        <result property="testItemCode"    column="test_item_code"    />
         <result property="testItemName"    column="test_item_name"    />
         <result property="instrumentId"    column="instrument_id"    />
+        <result property="instrumentCode"    column="instrument_code"    />
         <result property="instrumentName"    column="instrument_name"    />
         <result property="sampleType"    column="sample_type"    />
         <result property="price"    column="price"    />
@@ -25,15 +27,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTestItemInstrumentsVo">
-        select id, test_item_id, test_item_name, instrument_id, instrument_name, sample_type, price, is_primary, is_default, sort_order, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_item_instruments
+        select id, test_item_id, test_item_code, test_item_name, instrument_id, instrument_code, instrument_name, sample_type, price, is_primary, is_default, sort_order, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_item_instruments
     </sql>
 
     <select id="selectTestItemInstrumentsList" parameterType="TestItemInstruments" resultMap="TestItemInstrumentsResult">
         <include refid="selectTestItemInstrumentsVo"/>
         <where>  
             <if test="testItemId != null  and testItemId != ''"> and test_item_id = #{testItemId}</if>
+            <if test="testItemCode != null  and testItemCode != ''"> and test_item_code = #{testItemCode}</if>
             <if test="testItemName != null  and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
             <if test="instrumentId != null  and instrumentId != ''"> and instrument_id = #{instrumentId}</if>
+            <if test="instrumentCode != null  and instrumentCode != ''"> and instrument_code = #{instrumentCode}</if>
             <if test="instrumentName != null  and instrumentName != ''"> and instrument_name like concat('%', #{instrumentName}, '%')</if>
             <if test="sampleType != null  and sampleType != ''"> and sample_type = #{sampleType}</if>
             <if test="price != null "> and price = #{price}</if>
@@ -54,8 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="testItemId != null and testItemId != ''">test_item_id,</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code,</if>
             <if test="testItemName != null">test_item_name,</if>
             <if test="instrumentId != null and instrumentId != ''">instrument_id,</if>
+            <if test="instrumentCode != null and instrumentCode != ''">instrument_code,</if>
             <if test="instrumentName != null">instrument_name,</if>
             <if test="sampleType != null">sample_type,</if>
             <if test="price != null">price,</if>
@@ -73,8 +79,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="testItemId != null and testItemId != ''">#{testItemId},</if>
+            <if test="testItemCode != null and testItemCode != ''">#{testItemCode},</if>
             <if test="testItemName != null">#{testItemName},</if>
             <if test="instrumentId != null and instrumentId != ''">#{instrumentId},</if>
+            <if test="instrumentCode != null and instrumentCode != ''">#{instrumentCode},</if>
             <if test="instrumentName != null">#{instrumentName},</if>
             <if test="sampleType != null">#{sampleType},</if>
             <if test="price != null">#{price},</if>
@@ -95,8 +103,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update t_mgmt_test_item_instruments
         <trim prefix="SET" suffixOverrides=",">
             <if test="testItemId != null and testItemId != ''">test_item_id = #{testItemId},</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code = #{testItemCode},</if>
             <if test="testItemName != null">test_item_name = #{testItemName},</if>
             <if test="instrumentId != null and instrumentId != ''">instrument_id = #{instrumentId},</if>
+            <if test="instrumentCode != null and instrumentCode != ''">instrument_code = #{instrumentCode},</if>
             <if test="instrumentName != null">instrument_name = #{instrumentName},</if>
             <if test="sampleType != null">sample_type = #{sampleType},</if>
             <if test="price != null">price = #{price},</if>

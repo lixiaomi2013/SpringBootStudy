@@ -7,25 +7,25 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 检验项目主对象 t_mgmt_test_items
+ * 检验项目信息对象 t_mgmt_test_items
  * 
  * @author zhuhoulin
- * @date 2026-01-03
+ * @date 2026-02-14
  */
 public class TestItems extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
-    private String id;
+    private String testItemId;
 
-    /** 项目代码 */
-    @Excel(name = "项目代码")
-    private String itemCode;
+    /** 检验项目代码 */
+    @Excel(name = "检验项目代码")
+    private String testItemCode;
 
-    /** 项目名称 */
-    @Excel(name = "项目名称")
-    private String itemName;
+    /** 检验项目名称 */
+    @Excel(name = "检验项目名称")
+    private String testItemName;
 
     /** 报告单显示名称 */
     @Excel(name = "报告单显示名称")
@@ -74,34 +74,34 @@ public class TestItems extends BaseEntity
     /** 删除标志 */
     private String delFlag;
 
-    public void setId(String id) 
+    public void setTestItemId(String testItemId) 
     {
-        this.id = id;
+        this.testItemId = testItemId;
     }
 
-    public String getId() 
+    public String getTestItemId() 
     {
-        return id;
+        return testItemId;
     }
 
-    public void setItemCode(String itemCode) 
+    public void setTestItemCode(String testItemCode) 
     {
-        this.itemCode = itemCode;
+        this.testItemCode = testItemCode;
     }
 
-    public String getItemCode() 
+    public String getTestItemCode() 
     {
-        return itemCode;
+        return testItemCode;
     }
 
-    public void setItemName(String itemName) 
+    public void setTestItemName(String testItemName) 
     {
-        this.itemName = itemName;
+        this.testItemName = testItemName;
     }
 
-    public String getItemName() 
+    public String getTestItemName() 
     {
-        return itemName;
+        return testItemName;
     }
 
     public void setReportName(String reportName) 
@@ -227,9 +227,9 @@ public class TestItems extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("itemCode", getItemCode())
-            .append("itemName", getItemName())
+            .append("testItemId", getTestItemId())
+            .append("testItemCode", getTestItemCode())
+            .append("testItemName", getTestItemName())
             .append("reportName", getReportName())
             .append("testTypeId", getTestTypeId())
             .append("testCategory", getTestCategory())

@@ -16,6 +16,14 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">项目代码：</label>
+                    <div class="col-sm-8">
+                        <input name="testItemCode" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
                     <label class="col-sm-3 control-label">项目名称：</label>
                     <div class="col-sm-8">
                         <input type="text" id="testItemName" name="testItemName" onclick="selectTestItem('testItemId','testItemName')" class="form-control" required/>
@@ -66,9 +74,21 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">状态：</label>
+                    <div class="col-sm-8">
+                        <select name="status" class="form-control" th:with="type=${@dict.getType('sys_common_status')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
                     <label class="col-sm-3 control-label">删除标志：</label>
                     <div class="col-sm-8">
-                        <input name="delFlag" class="form-control" type="text">
+                        <select name="delFlag" class="form-control" th:with="type=${@dict.getType('sys_del_flag')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -96,47 +116,47 @@
         }
     </script>
     <script type="text/javascript">
-		var prefix_testitem = ctx + "mgmt/testitems";
-		function selectTestItem(testItemId, testItemName) {
-			var options = {
-				title : '选择检验项目',
-				url : prefix_testitem + "/select",
-				callBack : doSubmit1
-			};
-			$.modal.openOptions(options);
-		}
-		
-		function doSubmit1(index, layero){
-			var body = $.modal.getChildFrame(index);
+        var prefix_testitem = ctx + "mgmt/testitems";
+        function selectTestItem(testItemId, testItemName) {
+            var options = {
+                title : '选择检验项目',
+                url : prefix_testitem + "/select",
+                callBack : doSubmit1
+            };
+            $.modal.openOptions(options);
+        }
+        
+        function doSubmit1(index, layero){
+            var body = $.modal.getChildFrame(index);
             let testItemId = body.find('#testItemId').val();
             let testItemCode = body.find('#testItemCode').val();
             let testItemName = body.find('#testItemName').val();
-   			$('#testItemId').val(testItemId);
-			$('#testItemCode').val(testItemCode);
+            $('#testItemId').val(testItemId);
+            $('#testItemCode').val(testItemCode);
             $("#testItemName").val(testItemName);
-   			$.modal.close(index);
-		}
-		
-		var product_prefix = ctx + "mgmt/product";
-		function selectProduct() {
-			var options = {
-				title : '选择产品信息',
-				url : product_prefix + "/select",
-				callBack : doSubmit3
-			};
-			$.modal.openOptions(options);
-		}
-		
-		function doSubmit3(index, layero){
-			var body = $.modal.getChildFrame(index);
+            $.modal.close(index);
+        }
+        
+        var product_prefix = ctx + "mgmt/product";
+        function selectProduct() {
+            var options = {
+                title : '选择产品信息',
+                url : product_prefix + "/select",
+                callBack : doSubmit3
+            };
+            $.modal.openOptions(options);
+        }
+        
+        function doSubmit3(index, layero){
+            var body = $.modal.getChildFrame(index);
             let productId = body.find('#productId').val();
             let productCode = body.find('#productCode').val();
             let productName = body.find('#productName').val();
-			$('#productId').val(productId);
-			$('#productCode').val(productCode);
+            $('#productId').val(productId);
+            $('#productCode').val(productCode);
             $("#productName").val(productName);
-   			$.modal.close(index);
-		}
-	</script>
+            $.modal.close(index);
+        }
+    </script>
 </body>
 </html>

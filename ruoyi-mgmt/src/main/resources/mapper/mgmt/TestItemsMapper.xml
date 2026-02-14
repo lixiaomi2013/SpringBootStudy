@@ -5,9 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.mgmt.mapper.TestItemsMapper">
     
     <resultMap type="TestItems" id="TestItemsResult">
-        <result property="id"    column="id"    />
-        <result property="itemCode"    column="item_code"    />
-        <result property="itemName"    column="item_name"    />
+        <result property="testItemId"    column="test_item_id"    />
+        <result property="testItemCode"    column="test_item_code"    />
+        <result property="testItemName"    column="test_item_name"    />
         <result property="reportName"    column="report_name"    />
         <result property="testTypeId"    column="test_type_id"    />
         <result property="testCategory"    column="test_category"    />
@@ -28,14 +28,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTestItemsVo">
-        select id, item_code, item_name, report_name, test_type_id, test_category, sample_type, sample_volume, sample_container, clinical_significance, reference_range, unit, turnaround_time, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_items
+        select test_item_id, test_item_code, test_item_name, report_name, test_type_id, test_category, sample_type, sample_volume, sample_container, clinical_significance, reference_range, unit, turnaround_time, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_test_items
     </sql>
 
     <select id="selectTestItemsList" parameterType="TestItems" resultMap="TestItemsResult">
         <include refid="selectTestItemsVo"/>
         <where>  
-            <if test="itemCode != null  and itemCode != ''"> and item_code = #{itemCode}</if>
-            <if test="itemName != null  and itemName != ''"> and item_name like concat('%', #{itemName}, '%')</if>
+            <if test="testItemCode != null  and testItemCode != ''"> and test_item_code = #{testItemCode}</if>
+            <if test="testItemName != null  and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
             <if test="reportName != null  and reportName != ''"> and report_name like concat('%', #{reportName}, '%')</if>
             <if test="testTypeId != null  and testTypeId != ''"> and test_type_id = #{testTypeId}</if>
             <if test="testCategory != null  and testCategory != ''"> and test_category = #{testCategory}</if>
@@ -50,17 +50,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectTestItemsById" parameterType="String" resultMap="TestItemsResult">
+    <select id="selectTestItemsByTestItemId" parameterType="String" resultMap="TestItemsResult">
         <include refid="selectTestItemsVo"/>
-        where id = #{id}
+        where test_item_id = #{testItemId}
     </select>
 
     <insert id="insertTestItems" parameterType="TestItems">
         insert into t_mgmt_test_items
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="itemCode != null and itemCode != ''">item_code,</if>
-            <if test="itemName != null and itemName != ''">item_name,</if>
+            <if test="testItemId != null">test_item_id,</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code,</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name,</if>
             <if test="reportName != null">report_name,</if>
             <if test="testTypeId != null">test_type_id,</if>
             <if test="testCategory != null">test_category,</if>
@@ -80,9 +80,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="itemCode != null and itemCode != ''">#{itemCode},</if>
-            <if test="itemName != null and itemName != ''">#{itemName},</if>
+            <if test="testItemId != null">#{testItemId},</if>
+            <if test="testItemCode != null and testItemCode != ''">#{testItemCode},</if>
+            <if test="testItemName != null and testItemName != ''">#{testItemName},</if>
             <if test="reportName != null">#{reportName},</if>
             <if test="testTypeId != null">#{testTypeId},</if>
             <if test="testCategory != null">#{testCategory},</if>
@@ -106,8 +106,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTestItems" parameterType="TestItems">
         update t_mgmt_test_items
         <trim prefix="SET" suffixOverrides=",">
-            <if test="itemCode != null and itemCode != ''">item_code = #{itemCode},</if>
-            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code = #{testItemCode},</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name = #{testItemName},</if>
             <if test="reportName != null">report_name = #{reportName},</if>
             <if test="testTypeId != null">test_type_id = #{testTypeId},</if>
             <if test="testCategory != null">test_category = #{testCategory},</if>
@@ -126,17 +126,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
-        where id = #{id}
+        where test_item_id = #{testItemId}
     </update>
 
-    <delete id="deleteTestItemsById" parameterType="String">
-        delete from t_mgmt_test_items where id = #{id}
+    <delete id="deleteTestItemsByTestItemId" parameterType="String">
+        delete from t_mgmt_test_items where test_item_id = #{testItemId}
     </delete>
 
-    <delete id="deleteTestItemsByIds" parameterType="String">
-        delete from t_mgmt_test_items where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+    <delete id="deleteTestItemsByTestItemIds" parameterType="String">
+        delete from t_mgmt_test_items where test_item_id in 
+        <foreach item="testItemId" collection="array" open="(" separator="," close=")">
+            #{testItemId}
         </foreach>
     </delete>
 

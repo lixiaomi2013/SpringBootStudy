@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 项目与产品关系对象 t_mgmt_test_item_product_info
  * 
  * @author zhuhoulin
- * @date 2026-01-20
+ * @date 2026-02-14
  */
 public class TestItemProductInfo extends BaseEntity
 {
@@ -22,6 +22,10 @@ public class TestItemProductInfo extends BaseEntity
     /** 项目ID */
     @Excel(name = "项目ID")
     private String testItemId;
+
+    /** 项目代码 */
+    @Excel(name = "项目代码")
+    private String testItemCode;
 
     /** 项目名称 */
     @Excel(name = "项目名称")
@@ -72,6 +76,16 @@ public class TestItemProductInfo extends BaseEntity
     public String getTestItemId() 
     {
         return testItemId;
+    }
+
+    public void setTestItemCode(String testItemCode) 
+    {
+        this.testItemCode = testItemCode;
+    }
+
+    public String getTestItemCode() 
+    {
+        return testItemCode;
     }
 
     public void setTestItemName(String testItemName) 
@@ -159,6 +173,7 @@ public class TestItemProductInfo extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("testItemId", getTestItemId())
+            .append("testItemCode", getTestItemCode())
             .append("testItemName", getTestItemName())
             .append("productId", getProductId())
             .append("productCode", getProductCode())
