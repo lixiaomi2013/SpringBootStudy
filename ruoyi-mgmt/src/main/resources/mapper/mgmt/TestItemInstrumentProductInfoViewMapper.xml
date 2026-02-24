@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.mgmt.mapper.TestItemInstrumentProductInfoViewMapper">
+    
+    <resultMap type="TestItemInstrumentProductInfoView" id="TestItemInstrumentProductInfoViewResult">
+        <result property="instrumentCode"    column="instrument_code"    />
+        <result property="instrumentName"    column="instrument_name"    />
+        <result property="testItemCode"    column="test_item_code"    />
+        <result property="testItemName"    column="test_item_name"    />
+        <result property="sampleType"    column="sample_type"    />
+        <result property="productId"    column="product_id"    />
+        <result property="productCode"    column="product_code"    />
+        <result property="productName"    column="product_name"    />
+        <result property="productShortName"    column="product_short_name"    />
+        <result property="displayName"    column="display_name"    />
+        <result property="spec"    column="spec"    />
+        <result property="brand"    column="brand"    />
+        <result property="storageCondition"    column="storage_condition"    />
+        <result property="unit"    column="unit"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="totailQuantity"    column="totail_quantity"    />
+        <result property="usedQuantity"    column="used_quantity"    />
+        <result property="availableQuantity"    column="available_quantity"    />
+        <result property="projectTimes"    column="project_times"    />
+        <result property="batchNumber"    column="batch_number"    />
+        <result property="productionDate"    column="production_date"    />
+        <result property="expiryDate"    column="expiry_date"    />
+        <result property="approvalNumber"    column="approval_number"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTestItemInstrumentProductInfoViewVo">
+        select instrument_code, instrument_name, test_item_code, test_item_name, sample_type, product_id, product_code, product_name, product_short_name, display_name, spec, brand, storage_condition, unit, unit_price, totail_quantity, used_quantity, available_quantity, project_times, batch_number, production_date, expiry_date, approval_number, file_name, status, del_flag, create_by, create_time, update_by, update_time, remark from v_mgmt_test_item_instrument_product_info_view
+    </sql>
+
+    <select id="selectTestItemInstrumentProductInfoViewList" parameterType="TestItemInstrumentProductInfoView" resultMap="TestItemInstrumentProductInfoViewResult">
+        <include refid="selectTestItemInstrumentProductInfoViewVo"/>
+        <where>  
+            <if test="instrumentCode != null  and instrumentCode != ''"> and instrument_code = #{instrumentCode}</if>
+            <if test="instrumentName != null  and instrumentName != ''"> and instrument_name like concat('%', #{instrumentName}, '%')</if>
+            <if test="testItemCode != null  and testItemCode != ''"> and test_item_code = #{testItemCode}</if>
+            <if test="testItemName != null  and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
+            <if test="sampleType != null  and sampleType != ''"> and sample_type = #{sampleType}</if>
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="productCode != null  and productCode != ''"> and product_code = #{productCode}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="productShortName != null  and productShortName != ''"> and product_short_name like concat('%', #{productShortName}, '%')</if>
+            <if test="displayName != null  and displayName != ''"> and display_name like concat('%', #{displayName}, '%')</if>
+            <if test="spec != null  and spec != ''"> and spec = #{spec}</if>
+            <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
+            <if test="storageCondition != null  and storageCondition != ''"> and storage_condition = #{storageCondition}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="totailQuantity != null "> and totail_quantity = #{totailQuantity}</if>
+            <if test="usedQuantity != null "> and used_quantity = #{usedQuantity}</if>
+            <if test="availableQuantity != null "> and available_quantity = #{availableQuantity}</if>
+            <if test="projectTimes != null "> and project_times = #{projectTimes}</if>
+            <if test="batchNumber != null  and batchNumber != ''"> and batch_number = #{batchNumber}</if>
+            <if test="productionDate != null  and productionDate != ''"> and production_date = #{productionDate}</if>
+            <if test="expiryDate != null  and expiryDate != ''"> and expiry_date = #{expiryDate}</if>
+            <if test="approvalNumber != null  and approvalNumber != ''"> and approval_number = #{approvalNumber}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectTestItemInstrumentProductInfoViewByInstrumentCode" parameterType="String" resultMap="TestItemInstrumentProductInfoViewResult">
+        <include refid="selectTestItemInstrumentProductInfoViewVo"/>
+        where instrument_code = #{instrumentCode}
+    </select>
+
+    <insert id="insertTestItemInstrumentProductInfoView" parameterType="TestItemInstrumentProductInfoView">
+        insert into v_mgmt_test_item_instrument_product_info_view
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="instrumentCode != null and instrumentCode != ''">instrument_code,</if>
+            <if test="instrumentName != null and instrumentName != ''">instrument_name,</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code,</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name,</if>
+            <if test="sampleType != null">sample_type,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="productCode != null">product_code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="productShortName != null">product_short_name,</if>
+            <if test="displayName != null">display_name,</if>
+            <if test="spec != null">spec,</if>
+            <if test="brand != null">brand,</if>
+            <if test="storageCondition != null">storage_condition,</if>
+            <if test="unit != null">unit,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="totailQuantity != null">totail_quantity,</if>
+            <if test="usedQuantity != null">used_quantity,</if>
+            <if test="availableQuantity != null">available_quantity,</if>
+            <if test="projectTimes != null">project_times,</if>
+            <if test="batchNumber != null">batch_number,</if>
+            <if test="productionDate != null">production_date,</if>
+            <if test="expiryDate != null">expiry_date,</if>
+            <if test="approvalNumber != null">approval_number,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="instrumentCode != null and instrumentCode != ''">#{instrumentCode},</if>
+            <if test="instrumentName != null and instrumentName != ''">#{instrumentName},</if>
+            <if test="testItemCode != null and testItemCode != ''">#{testItemCode},</if>
+            <if test="testItemName != null and testItemName != ''">#{testItemName},</if>
+            <if test="sampleType != null">#{sampleType},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="productCode != null">#{productCode},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="productShortName != null">#{productShortName},</if>
+            <if test="displayName != null">#{displayName},</if>
+            <if test="spec != null">#{spec},</if>
+            <if test="brand != null">#{brand},</if>
+            <if test="storageCondition != null">#{storageCondition},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="totailQuantity != null">#{totailQuantity},</if>
+            <if test="usedQuantity != null">#{usedQuantity},</if>
+            <if test="availableQuantity != null">#{availableQuantity},</if>
+            <if test="projectTimes != null">#{projectTimes},</if>
+            <if test="batchNumber != null">#{batchNumber},</if>
+            <if test="productionDate != null">#{productionDate},</if>
+            <if test="expiryDate != null">#{expiryDate},</if>
+            <if test="approvalNumber != null">#{approvalNumber},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestItemInstrumentProductInfoView" parameterType="TestItemInstrumentProductInfoView">
+        update v_mgmt_test_item_instrument_product_info_view
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instrumentName != null and instrumentName != ''">instrument_name = #{instrumentName},</if>
+            <if test="testItemCode != null and testItemCode != ''">test_item_code = #{testItemCode},</if>
+            <if test="testItemName != null and testItemName != ''">test_item_name = #{testItemName},</if>
+            <if test="sampleType != null">sample_type = #{sampleType},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="productShortName != null">product_short_name = #{productShortName},</if>
+            <if test="displayName != null">display_name = #{displayName},</if>
+            <if test="spec != null">spec = #{spec},</if>
+            <if test="brand != null">brand = #{brand},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="totailQuantity != null">totail_quantity = #{totailQuantity},</if>
+            <if test="usedQuantity != null">used_quantity = #{usedQuantity},</if>
+            <if test="availableQuantity != null">available_quantity = #{availableQuantity},</if>
+            <if test="projectTimes != null">project_times = #{projectTimes},</if>
+            <if test="batchNumber != null">batch_number = #{batchNumber},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="approvalNumber != null">approval_number = #{approvalNumber},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where instrument_code = #{instrumentCode}
+    </update>
+
+    <delete id="deleteTestItemInstrumentProductInfoViewByInstrumentCode" parameterType="String">
+        delete from v_mgmt_test_item_instrument_product_info_view where instrument_code = #{instrumentCode}
+    </delete>
+
+    <delete id="deleteTestItemInstrumentProductInfoViewByInstrumentCodes" parameterType="String">
+        delete from v_mgmt_test_item_instrument_product_info_view where instrument_code in 
+        <foreach item="instrumentCode" collection="array" open="(" separator="," close=")">
+            #{instrumentCode}
+        </foreach>
+    </delete>
+
+</mapper>
