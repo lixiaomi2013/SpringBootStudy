@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label is-required">项目ID：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="testItemId" id="testItemId" th:field="*{testItemId}"  onclick="selectTestItem('testItemId','testItemName')" class="form-control" required/>
+                        <input type="text" name="testItemId" id="testItemId" th:field="*{testItemId}" onclick="selectTestItem('testItemId','testItemName')" class="form-control" required/>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label is-required">项目代码：</label>
                     <div class="col-sm-8">
-                        <input name="testItemCode" th:field="*{testItemCode}" class="form-control" type="text" required>
+                        <input name="testItemCode" th:field="*{testItemCode}" onclick="selectTestItem('testItemId','testItemName')" class="form-control" type="text" required>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label is-required">设备ID：</label>
                     <div class="col-sm-8">
-                        <input name="instrumentId" th:field="*{instrumentId}" class="form-control" type="text" required>
+                        <input name="instrumentId" id="instrumentId" th:field="*{instrumentId}" onclick="selectInstrument('instrumentId','instrumentName')" class="form-control" type="text" required>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label is-required">仪器编号：</label>
                     <div class="col-sm-8">
-                        <input name="instrumentCode" th:field="*{instrumentCode}" class="form-control" type="text" required>
+                        <input name="instrumentCode" id="instrumentCode" th:field="*{instrumentCode}" onclick="selectInstrument('instrumentId','instrumentName')" class="form-control" type="text" required>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">设备名称：</label>
                     <div class="col-sm-8">
-                        <input name="instrumentName" th:field="*{instrumentName}" class="form-control" type="text">
+                        <input name="instrumentName" id="instrumentName" th:field="*{instrumentName}" onclick="selectInstrument('instrumentId','instrumentName')" class="form-control" type="text">
                     </div>
                 </div>
             </div>
@@ -134,46 +134,49 @@
             }
         }
     </script>
-    	<script type="text/javascript">
-		var prefix_testitem = ctx + "mgmt/testitems";
-		function selectTestItem(testItemId, testItemName) {
-			var options = {
-				title : '选择检验项目',
-				url : prefix_testitem + "/select",
-				callBack : doSubmit1
-			};
-			$.modal.openOptions(options);
-		}
-		
-		function doSubmit1(index, layero){
-			var body = $.modal.getChildFrame(index);
+        <script type="text/javascript">
+        var prefix_testitem = ctx + "mgmt/testitems";
+        function selectTestItem(testItemId, testItemName) {
+            var options = {
+                title : '选择检验项目',
+                url : prefix_testitem + "/select",
+                callBack : doSubmit1
+            };
+            $.modal.openOptions(options);
+        }
+        
+        function doSubmit1(index, layero){
+            var body = $.modal.getChildFrame(index);
             let testItemId = body.find('#testItemId').val();
             let testItemCode = body.find('#testItemCode').val();
             let testItemName = body.find('#testItemName').val();
-   			$('#testItemId').val(testItemId);
-			$('#testItemCode').val(testItemCode);
+            $('#testItemId').val(testItemId);
+            $('#testItemCode').val(testItemCode);
             $("#testItemName").val(testItemName);
-   			$.modal.close(index);
-		}
-		
-		var instrument_prefix = ctx + "mgmt/instruments";
-		function selectInstrument(instrumentId, instrumentName) {
-			var options = {
-				title : '选择设备仪器',
-				url : instrument_prefix + "/select",
-				callBack : doSubmit2
-			};
-			$.modal.openOptions(options);
-		}
-		
-		function doSubmit2(index, layero){
-			var body = $.modal.getChildFrame(index);
+            $.modal.close(index);
+        }
+
+        const instrument_prefix = ctx + "mgmt/instruments";
+        function selectInstrument(instrumentId, instrumentName) {
+            var options = {
+                title : '选择设备仪器',
+                url : instrument_prefix + "/select",
+                callBack : doSubmit2
+            };
+            $.modal.openOptions(options);
+        }
+
+        function doSubmit2(index, layero) {
+            var body = $.modal.getChildFrame(index);
             let instrumentId = body.find('#instrumentId').val();
             let instrumentName = body.find('#instrumentName').val();
-			$('#instrumentId').val(instrumentId);
+            let instrumentCode = body.find('#instrumentCode').val();
+
+            $('#instrumentId').val(instrumentId);
+            $('#instrumentCode').val(instrumentCode);
             $("#instrumentName").val(instrumentName);
-   			$.modal.close(index);
-		}
-	</script>
+            $.modal.close(index);
+        }
+    </script>
 </body>
 </html>

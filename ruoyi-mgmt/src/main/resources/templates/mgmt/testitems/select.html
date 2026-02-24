@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-	<th:block th:include="include :: header('表格传值给父页面')" />
+    <th:block th:include="include :: header('表格传值给父页面')" />
 </head>
 <body class="gray-bg">
      <input type="hidden" id="testItemId">
@@ -47,7 +47,7 @@
                 <table id="bootstrap-table"></table>
             </div>
         </div>
-	</div>
+    </div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('mgmt:testitems:edit')}]];
@@ -59,35 +59,35 @@
         
         $(function() {
             $.extend($.table, {
-            	selectedRows: function() {
+                selectedRows: function() {
                     var selectedRows = $("#" + table.options.id).bootstrapTable('getSelections');
                     return selectedRows || [];
                 }
             });
-        	
+            
             var options = {
                 url: prefix + "/list",
                 modalName: "检验项目主",
-		        showSearch: false,
-		        showRefresh: false,
-		        showToggle: false,
-		        showColumns: false,
+                showSearch: false,
+                showRefresh: false,
+                showToggle: false,
+                showColumns: false,
                 columns: [{
-		            // checkbox: true,
-		            radio: true
-		        },
+                    // checkbox: true,
+                    radio: true
+                },
                 {
-                    field: 'id',
+                    field: 'testItemId',
                     title: '主键',
                     visible: false
                 },
                 {
-                    field: 'itemCode',
-                    title: '项目代码'
+                    field: 'testItemCode',
+                    title: '检验项目代码'
                 },
                 {
-                    field: 'itemName',
-                    title: '项目名称'
+                    field: 'testItemName',
+                    title: '检验项目名称'
                 },
                 {
                     field: 'testTypeId',
@@ -121,8 +121,8 @@
         });
         
         /* 添加用户-选择用户-提交(子页面调用父页面形式) */
-		function submitHandler(index, layero) {
-			// var rows = $.table.selectColumns("id", true);
+        function submitHandler(index, layero) {
+            // var rows = $.table.selectColumns("id", true);
             // var row = $("#" + table.options.id).bootstrapTable('getSelections')[0];
             var row = $.table.selectedRows()[0];
             
@@ -130,31 +130,31 @@
                 $.modal.alertWarning("请至少选择一条记录");
                 return;
             }
-			debugger;
-			$.modal.close();
-			// 父页面的方法
-			// activeWindow().selectUsers();
-			// 父页面的变量
-			activeWindow().$('#testItemId').val(row['id']);
-			activeWindow().$('#testItemName').val(row['itemName']);
-			// window.parent.$('#testItemId').val(row['id']);
-			// debugger;
-			// window.parent.$('#testItemName').val(row['itemName']);
-		}
-		/* 添加用户-选择用户-提交(回调形式-父页面调用子页面) */
-		function getSelections() {
-			return $.table.selectFirstColumns();
-		}
+            debugger;
+            $.modal.close();
+            // 父页面的方法
+            // activeWindow().selectUsers();
+            // 父页面的变量
+            activeWindow().$('#testItemId').val(row['id']);
+            activeWindow().$('#testItemName').val(row['itemName']);
+            // window.parent.$('#testItemId').val(row['id']);
+            // debugger;
+            // window.parent.$('#testItemName').val(row['itemName']);
+        }
+        /* 添加用户-选择用户-提交(回调形式-父页面调用子页面) */
+        function getSelections() {
+            return $.table.selectFirstColumns();
+        }
 
-		$("#bootstrap-table").on("check.bs.table check-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rowsAfter, rowsBefore) {
+        $("#bootstrap-table").on("check.bs.table check-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rowsAfter, rowsBefore) {
             var rows = $.common.equals("uncheck-all", e.type) ? rowsBefore : rowsAfter;
             // var rowIds = $.table.affectedRowIds(rows);
-            let testItemId = rows['id'];
-            let testItemCode = rows['itemCode'];
-            let testItemName = rows['itemName'];
+            let testItemId = rows['testItemId'];
+            let testItemCode = rows['testItemCode'];
+            let testItemName = rows['testItemName'];
             debugger;
-			$('#testItemId').val(testItemId);
-			$('#testItemCode').val(testItemCode);
+            $('#testItemId').val(testItemId);
+            $('#testItemCode').val(testItemCode);
             $("#testItemName").val(testItemName);
             console.info("testItemId:" + testItemId + ",testItemCode:" + testItemCode + ",testItemName:" + testItemName);
         });
