@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productCode"    column="product_code"    />
         <result property="productName"    column="product_name"    />
         <result property="productShortName"    column="product_short_name"    />
+        <result property="displayName"    column="display_name"    />
         <result property="spec"    column="spec"    />
         <result property="brand"    column="brand"    />
         <result property="storageCondition"    column="storage_condition"    />
@@ -31,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectProductInfoVo">
-        select product_id, product_code, product_name, product_short_name, spec, brand, storage_condition, unit, unit_price, quantity, project_times, batch_number, production_date, expiry_date, approval_number, file_name, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_product_info
+        select product_id, product_code, product_name, product_short_name, display_name, spec, brand, storage_condition, unit, unit_price, quantity, project_times, batch_number, production_date, expiry_date, approval_number, file_name, status, del_flag, create_by, create_time, update_by, update_time, remark from t_mgmt_product_info
     </sql>
 
     <select id="selectProductInfoList" parameterType="ProductInfo" resultMap="ProductInfoResult">
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productCode != null  and productCode != ''"> and product_code = #{productCode}</if>
             <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
             <if test="productShortName != null  and productShortName != ''"> and product_short_name like concat('%', #{productShortName}, '%')</if>
+            <if test="displayName != null  and displayName != ''"> and display_name like concat('%', #{displayName}, '%')</if>
             <if test="spec != null  and spec != ''"> and spec = #{spec}</if>
             <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
             <if test="storageCondition != null  and storageCondition != ''"> and storage_condition = #{storageCondition}</if>
@@ -68,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productCode != null and productCode != ''">product_code,</if>
             <if test="productName != null and productName != ''">product_name,</if>
             <if test="productShortName != null and productShortName != ''">product_short_name,</if>
+            <if test="displayName != null and displayName != ''">display_name,</if>
             <if test="spec != null and spec != ''">spec,</if>
             <if test="brand != null and brand != ''">brand,</if>
             <if test="storageCondition != null">storage_condition,</if>
@@ -93,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productCode != null and productCode != ''">#{productCode},</if>
             <if test="productName != null and productName != ''">#{productName},</if>
             <if test="productShortName != null and productShortName != ''">#{productShortName},</if>
+            <if test="displayName != null and displayName != ''">#{displayName},</if>
             <if test="spec != null and spec != ''">#{spec},</if>
             <if test="brand != null and brand != ''">#{brand},</if>
             <if test="storageCondition != null">#{storageCondition},</if>
@@ -121,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productCode != null and productCode != ''">product_code = #{productCode},</if>
             <if test="productName != null and productName != ''">product_name = #{productName},</if>
             <if test="productShortName != null and productShortName != ''">product_short_name = #{productShortName},</if>
+            <if test="displayName != null and displayName != ''">display_name = #{displayName},</if>
             <if test="spec != null and spec != ''">spec = #{spec},</if>
             <if test="brand != null and brand != ''">brand = #{brand},</if>
             <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
